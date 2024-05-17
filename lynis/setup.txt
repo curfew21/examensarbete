@@ -1,0 +1,9 @@
+# Clone the tool
+	Git clone https://github.com/CISOfy/lynis
+
+
+# CD into it and run it
+	Cd lynis && ./lynis audit system
+
+# Example solution for PKGS-7392
+Update & upgrade with apt-get update and apt-get upgrade.

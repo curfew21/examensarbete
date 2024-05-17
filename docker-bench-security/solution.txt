@@ -1,0 +1,1 @@
+docker container run --detach -ti -u 1000 --read-only -m 256mb --security-opt=no-new-privileges --cpu-shares=500 --pids-limit=1 --name mypython --health-cmd="<your_health_check_command>" python /bin/bash
