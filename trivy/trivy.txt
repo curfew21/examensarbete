@@ -9,4 +9,29 @@ sudo apt-get install trivy
 # To run
 Trivy image –severity [container-image]
 
+# New Dockerfile to fix most warnings:
+
+FROM nginx:latest
+
+RUN useradd -ms /bin/bash nginx-user
+
+USER nginx-user
+
+WORKDIR /usr/share/nginx/html
+
+RUN apt-get update && apt-get upgrade -y && \
+    apt-get install -y wget curl && \
+    rm -rf /var/lib/apt/lists/*
+
+COPY . /usr/share/nginx/html
+
+RUN find / -perm /6000 -type f -exec chmod a-s {} \; || true
+
+EXPOSE 80
+
+HEALTHCHECK --interval=30s --timeout=3s \
+  CMD wget --quiet --tries=1 --spider http://localhost/ || exit 1
+
+CMD ["nginx", "-g", "daemon off;"]
+
 
